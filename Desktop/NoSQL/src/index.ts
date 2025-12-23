@@ -5,9 +5,11 @@ import cors from 'cors'; // Added for frontend integration
 import { connectDB } from './config/database';
 import { connectCassandra, cassandraService } from './config/cassandra';
 import { checkInfluxConnection } from './config/influx';
+import { connectRedis } from './config/redis';
 import { StudentController } from './controllers/StudentController';
 import { CassandraController } from './controllers/CassandraController';
 import { InfluxController } from './controllers/InfluxController';
+import { redisService } from './services/RedisService';
 
 // Import Controllers
 import {
@@ -33,6 +35,7 @@ const PORT = process.env.PORT || 5000;
 connectDB(); // MongoDB
 connectCassandra(); // Cassandra
 checkInfluxConnection(); // InfluxDB
+connectRedis(); // Redis
 
 // 2. Neo4j Driver Connection logic
 let driver: Driver;
@@ -55,7 +58,9 @@ try {
 }
 
 // 3. Middlewares
-app.use(cors()); // Enable CORS requests from frontend
+app.use(cors({
+  exposedHeaders: ['X-Cache']
+})); // Enable CORS requests from frontend and expose cache status
 app.use(express.json());
 
 // 4. Routes Definition (Neo4j)
@@ -136,6 +141,23 @@ app.post('/api/enroll', (req, res) => studentController.unifiedEnroll(req, res))
 neoRouter.get('/recommendations/peers/:studentId', (req, res) => studentController.getRecommendedPeers(req, res));
 // Suggested Mentors (Neo4j)
 neoRouter.get('/recommendations/mentors/:studentId', (req, res) => studentController.getSuggestedMentors(req, res));
+
+// Redis Cache Management
+app.post('/api/redis/flush', async (req, res) => {
+    try {
+        await redisService.flush();
+        res.json({ message: 'Cache flushed' });
+    } catch (e: any) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+app.get('/api/redis/keys', async (req, res) => {
+    try {
+        const keys = await redisService.getKeys();
+        res.json({ keys });
+    } catch (e: any) { res.status(500).json({ error: e.message }); }
+});
 
 // 4.2 Routes Definition (Cassandra)
 const cassandraRouter = express.Router();

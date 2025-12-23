@@ -44,11 +44,13 @@ import {
   getStudentsAdvisedByInstructorsOfCourseWithPrereqs,
   getDepartmentInfluence
 } from '../services/neo4jService';
+import { redisService } from '../services/RedisService';
 
 // Student CRUD
 export const createStudentCtrl = async (req: Request, res: Response) => {
   try {
     const student = await createStudent(req.body);
+    await redisService.del('neo:students:all');
     res.status(201).json(student);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -56,8 +58,18 @@ export const createStudentCtrl = async (req: Request, res: Response) => {
 };
 
 export const getAllStudentsCtrl = async (req: Request, res: Response) => {
+  const cacheKey = 'neo:students:all';
   try {
+    const cached = await redisService.get(cacheKey);
+    if (cached) {
+      res.setHeader('X-Cache', 'HIT');
+      return res.json(cached);
+    }
+
     const students = await getAllStudents();
+    await redisService.set(cacheKey, students, 3600);
+    
+    res.setHeader('X-Cache', 'MISS');
     res.json(students);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -98,6 +110,7 @@ export const deleteStudentCtrl = async (req: Request, res: Response) => {
 export const createInstructorCtrl = async (req: Request, res: Response) => {
   try {
     const instructor = await createInstructor(req.body);
+    await redisService.del('neo:instructors:all');
     res.status(201).json(instructor);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -105,8 +118,18 @@ export const createInstructorCtrl = async (req: Request, res: Response) => {
 };
 
 export const getAllInstructorsCtrl = async (req: Request, res: Response) => {
+  const cacheKey = 'neo:instructors:all';
   try {
+    const cached = await redisService.get(cacheKey);
+    if (cached) {
+      res.setHeader('X-Cache', 'HIT');
+      return res.json(cached);
+    }
+
     const instructors = await getAllInstructors();
+    await redisService.set(cacheKey, instructors, 3600);
+
+    res.setHeader('X-Cache', 'MISS');
     res.json(instructors);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -152,8 +175,18 @@ export const createCourseCtrl = async (req: Request, res: Response) => {
 };
 
 export const getAllCoursesCtrl = async (req: Request, res: Response) => {
+  const cacheKey = 'neo:courses:all';
   try {
+    const cached = await redisService.get(cacheKey);
+    if (cached) {
+      res.setHeader('X-Cache', 'HIT');
+      return res.json(cached);
+    }
+
     const courses = await getAllCourses();
+    await redisService.set(cacheKey, courses, 3600);
+
+    res.setHeader('X-Cache', 'MISS');
     res.json(courses);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -199,8 +232,18 @@ export const createDepartmentCtrl = async (req: Request, res: Response) => {
 };
 
 export const getAllDepartmentsCtrl = async (req: Request, res: Response) => {
+  const cacheKey = 'neo:departments:all';
   try {
+    const cached = await redisService.get(cacheKey);
+    if (cached) {
+      res.setHeader('X-Cache', 'HIT');
+      return res.json(cached);
+    }
+
     const depts = await getAllDepartments();
+    await redisService.set(cacheKey, depts, 3600);
+
+    res.setHeader('X-Cache', 'MISS');
     res.json(depts);
   } catch (error: any) {
     res.status(500).json({ error: error.message });

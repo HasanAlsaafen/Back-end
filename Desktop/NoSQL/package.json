@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node src/index.ts"
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -20,10 +20,13 @@
     "neo4j-driver": "^6.0.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^25.0.3",
+    "@types/redis": "^4.0.10",
     "nodemon": "^3.1.11",
+    "redis": "^5.10.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },

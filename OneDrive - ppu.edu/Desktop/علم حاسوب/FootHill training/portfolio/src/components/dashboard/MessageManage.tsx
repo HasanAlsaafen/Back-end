@@ -8,7 +8,11 @@ import {
   faPhone,
   faUser,
   faCalendarAlt,
+  faInbox,
 } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../common/Loader";
+import ErrorMessage from "../common/ErrorMessage";
+import StatusAlert from "../common/StatusAlert";
 
 interface Message {
   _id: string;
@@ -74,15 +78,20 @@ export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: ()
       <main className="p-4 md:p-8 h-full overflow-y-auto custom-scrollbar bg-secondary/30 backdrop-blur-sm">
         <section className="max-w-6xl mx-auto space-y-8">
           <article className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <h1 className="text-4xl font-black text-text tracking-tight">
-              Messages Management
-            </h1>
+            <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-between w-full">
+              <h1 className="text-4xl font-black text-text tracking-tight flex items-center gap-4">
+                <FontAwesomeIcon icon={faInbox} className="text-primary" />
+                Messages Management
+              </h1>
+            </div>
           </article>
 
           {statusMessage && (
-            <div className={`p-4 rounded-xl text-white font-bold animate-in fade-in duration-300 ${statusMessage.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
-              {statusMessage.text}
-            </div>
+            <StatusAlert 
+              type={statusMessage.type} 
+              message={statusMessage.text} 
+              onClose={() => setStatusMessage(null)} 
+            />
           )}
 
           <div className="space-y-6">
@@ -92,14 +101,15 @@ export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: ()
             </div>
 
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-20">
-                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4" />
-                <p className="text-gray-500 font-medium">Loading messages...</p>
+              <div className="py-20">
+                <Loader message="Fetching pending inquiries..." />
               </div>
             ) : error ? (
-              <div className="text-center py-20 text-red-500 bg-red-500/10 rounded-2xl border border-red-500/20">
-                <p className="font-bold mb-2">Error loading messages</p>
-                <p>{error}</p>
+              <div className="py-20">
+                <ErrorMessage 
+                  message={error} 
+                  onRetry={() => fetchMessages()} 
+                />
               </div>
             ) : messages.length === 0 ? (
               <div className="text-center py-20 bg-secondary/10 rounded-2xl border border-dashed border-border flex flex-col items-center">
@@ -142,7 +152,7 @@ export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: ()
                           <h3 className="text-lg font-bold text-text mb-2 uppercase tracking-wide text-xs opacity-50">
                             Subject: {msg.subject}
                           </h3>
-                          <p className="text-text leading-relaxed bg-secondary/10 p-4 rounded-xl border border-border/50">
+                          <p className="text-text leading-relaxed bg-secondary/5 p-4 rounded-xl border border-border/50">
                             {msg.message}
                           </p>
                         </div>
@@ -191,6 +201,7 @@ export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: ()
         </section>
       </main>
 
+      {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-card w-full max-w-md p-6 rounded-2xl shadow-2xl border border-border animate-in zoom-in-95 duration-200">

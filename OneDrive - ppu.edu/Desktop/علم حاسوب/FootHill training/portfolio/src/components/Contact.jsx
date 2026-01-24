@@ -1,4 +1,5 @@
 import { useState } from "react";
+import StatusAlert from "./common/StatusAlert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
@@ -254,7 +255,6 @@ const Contact = () => {
                   required
                 />
               </div>
-
               <div className="flex flex-col sm:flex-row items-center gap-6">
                 <button
                   type="submit"
@@ -264,14 +264,15 @@ const Contact = () => {
                   {loading ? "Sending..." : "Send Message"}
                   <FontAwesomeIcon icon={faPaperPlane} className="text-sm" />
                 </button>
-                
-                {status.type && (
-                  <div className={`flex items-center gap-2 font-bold text-sm ${status.type === 'success' ? 'text-green-500' : 'text-red-500'} animate-in fade-in duration-300`}>
-                    <FontAwesomeIcon icon={status.type === 'success' ? faCheckCircle : faExclamationCircle} />
-                    {status.message}
-                  </div>
-                )}
               </div>
+
+              {status.type && (
+                <StatusAlert 
+                  type={status.type} 
+                  message={status.message} 
+                  onClose={() => setStatus({ type: null, message: "" })} 
+                />
+              )}
             </form>
           </div>
         </section>

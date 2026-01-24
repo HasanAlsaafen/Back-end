@@ -4,6 +4,9 @@ import {
   Plus,
   Trash2,
 } from 'lucide-react';
+import Loader from '../common/Loader';
+import ErrorMessage from '../common/ErrorMessage';
+import StatusAlert from '../common/StatusAlert';
 
 interface Card {
   _id?: string;
@@ -35,6 +38,7 @@ export default function HeroManage() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -49,8 +53,9 @@ export default function HeroManage() {
             setFormData(data);
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('Failed to fetch hero data', err);
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -116,12 +121,11 @@ export default function HeroManage() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4" />
-        <p className="text-gray-500 font-medium tracking-wide">Loading Hero Data...</p>
-      </div>
-    );
+    return <Loader message="Setting the stage..." fullScreen />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error} onRetry={() => window.location.reload()} fullScreen />;
   }
 
   return (
@@ -166,11 +170,11 @@ export default function HeroManage() {
         </header>
 
         {statusMessage && (
-          <div className={`p-4 rounded-xl font-bold text-white text-center transition-all ${
-            statusMessage.type === 'success' ? 'bg-green-500' : 'bg-red-500'
-          }`}>
-            {statusMessage.text}
-          </div>
+          <StatusAlert 
+            type={statusMessage.type} 
+            message={statusMessage.text} 
+            onClose={() => setStatusMessage(null)} 
+          />
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -204,6 +208,7 @@ export default function HeroManage() {
                   placeholder="Tell your story..."
                   required
                 />
+                
               </div>
             </div>
           </section>

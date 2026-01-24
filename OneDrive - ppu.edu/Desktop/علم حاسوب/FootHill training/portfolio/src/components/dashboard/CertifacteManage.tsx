@@ -10,6 +10,9 @@ import {
   faChevronRight,
   faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../common/Loader";
+import ErrorMessage from "../common/ErrorMessage";
+import StatusAlert from "../common/StatusAlert";
 
 interface Certificate {
   _id: string;
@@ -162,9 +165,11 @@ export default function CertifacateManage() {
           </article>
 
           {statusMessage && (
-            <div className={`p-4 rounded-xl text-white font-bold animate-in fade-in duration-300 ${statusMessage.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
-              {statusMessage.text}
-            </div>
+            <StatusAlert 
+              type={statusMessage.type} 
+              message={statusMessage.text} 
+              onClose={() => setStatusMessage(null)} 
+            />
           )}
 
           {showForm && (
@@ -261,14 +266,15 @@ export default function CertifacateManage() {
             </div>
 
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-20">
-                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4" />
-                <p className="text-gray-500 font-medium">Loading certificates...</p>
+              <div className="py-20">
+                <Loader message="Gathering achievements..." />
               </div>
             ) : error ? (
-              <div className="text-center py-20 text-red-500 bg-red-500/10 rounded-2xl border border-red-500/20">
-                <p className="font-bold mb-2">Error loading certificates</p>
-                <p>{error}</p>
+              <div className="py-20">
+                <ErrorMessage 
+                  message={error} 
+                  onRetry={() => fetchCertificates()} 
+                />
               </div>
             ) : certificates.length === 0 ? (
               <div className="text-center py-20 bg-secondary/10 rounded-2xl border border-dashed border-border flex flex-col items-center">

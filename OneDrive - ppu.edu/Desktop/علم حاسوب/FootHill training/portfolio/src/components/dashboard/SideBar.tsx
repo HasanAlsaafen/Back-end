@@ -4,11 +4,12 @@ import {
   faXmark, 
   faHome, 
   faProjectDiagram, 
-  faCertificate, 
+  faCertificate,
   faEnvelope,
   faChevronLeft,
   faChevronRight,
-  faRightFromBracket
+  faRightFromBracket,
+  faPalette,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ const menuItems = [
   { name: "Main", icon: faHome  },
   { name: "Projects", icon: faProjectDiagram },
   { name: "Certificates", icon: faCertificate },
+  { name: "Colors", icon: faPalette },
   { name: "Messages", icon: faEnvelope },
 ];
 

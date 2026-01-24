@@ -2,49 +2,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useEffect, useState } from "react";
+import Loader from "./common/Loader";
+import ErrorMessage from "./common/ErrorMessage";
 
-const techColors = {
-  typescript: "bg-[#3178c6] text-white",     
-  javascript: "bg-[#f7df1e] text-black",
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  react: "bg-[#61dafb] text-black",
-  tailwind: "bg-[#06b6d4] text-white",       
-  html: "bg-[#e34f26] text-white",
-  css: "bg-[#1572b6] text-white",
-
-  formik: "bg-[#2563eb] text-white",          
-
-  jest: "bg-[#99425b] text-white",             
-  reactTesting: "bg-[#e11d48] text-white",     
-  msw: "bg-[#ff6a33] text-white",              
-
-  firebase: "bg-[#ffca28] text-black",
-  mysql: "bg-[#00758f] text-white",
-  php: "bg-[#777bb4] text-white",
-  java: "bg-[#007396] text-white",
-  "node.js": "bg-[#339933] text-white",           
-  express: "bg-[#000000] text-white",   
-  seo: "bg-green-500/80 text-black",
-  bootstrab: "bg-[#7952b3] text-white",
-  "react testing": "bg-[#e11d48] text-white", 
-
-};
-
-
-
-
-
-
-const ProjectCard = ({ project }) => {
-
+const ProjectCard = ({ project, techColors }) => {
+  const getTechStyle = (techName) => {
+    const found = techColors.find(c => c.name.toLowerCase() === techName.toLowerCase());
+    if (found) {
+      return { backgroundColor: found.bgColor, color: found.textColor };
+    }
+    return { backgroundColor: "#6b7280", color: "#ffffff" }; // Default gray
+  };
 
   return (
     <article className="group bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 border border-border">
       <div className="relative overflow-hidden">
-        <a href={project.link} target={project.target} title="Tap to see">
+        <a href={project.projectUrl || project.link} target="_blank" rel="noreferrer" title="Tap to see">
           <img
             src={project.imageUrl}
-            alt={project.imageAlt}
+            alt={project.title}
             className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -63,9 +41,8 @@ const ProjectCard = ({ project }) => {
           {project.technologies.map((tech, index) => (
             <span
               key={index}
-              className={`inline-block rounded-full py-1 px-3 text-xs font-medium ${
-                techColors[tech.toLowerCase()] || "bg-gray-200 text-black"
-              }`}
+              className="inline-block rounded-full py-1 px-3 text-xs font-medium shadow-sm"
+              style={getTechStyle(tech)}
             >
               {tech}
             </span>
@@ -73,7 +50,7 @@ const ProjectCard = ({ project }) => {
         </div>
 
         <a
-          href={project.github}
+          href={project.github || "https://github.com/HasanAlsaafen"}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 bg-black dark:bg-slate-700 text-white rounded-full py-2 px-5 text-sm font-medium hover:bg-primary transition-colors"
@@ -85,82 +62,58 @@ const ProjectCard = ({ project }) => {
   );
 };
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
 const Projects = () => {
   const [projects, setProjects] = useState([]);
+  const [techColors, setTechColors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const limit = 3;
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`${API_URL}/projects?limit=${limit}&page=${page}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-        
+  const fetchTechColors = async () => {
+    try {
+      const response = await fetch(`${API_URL}/colorschemas`);
+      if (response.ok) {
         const data = await response.json();
-        setProjects(Array.isArray(data) ? data : []);
-        setLoading(false);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching projects:", err);
-        setError(err.message);
-        setLoading(false);
+        setTechColors(data);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching tech colors:", err);
+    }
+  };
 
+  const fetchProjects = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/projects?limit=${limit}&page=${page}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch projects");
+      }
+      
+      const data = await response.json();
+      setProjects(Array.isArray(data) ? data : []);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching projects:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTechColors();
+  }, []);
+
+  useEffect(() => {
     fetchProjects();
   }, [page]);
-    console.log(projects);
-  const projectData = [
-    {
-      id: "aztech-website",
-      title: "Aztech Website",
-      link: "https://aztech-ksa.com/",
-      target: "_AztechProject",
-      image: "/assets/images/aztech-project.png",
-      imageAlt: "Snapshot from the site",
-      description:
-        "This was the first real-world project I worked on, and it marked a significant step in my journey as a front-end developer. It was built entirely with React and deployed using Firebase, linked to the company's custom domain. I also integrated an email subscription service through the contact form.",
-      technologies: ["React", "Firebase", "SEO", "CSS", "Bootstrab", "JavaScript"],
-      github: "https://github.com/HasanAlsaafen/Aztech-New",
-    },
-    {
-      id: "news-website",
-      title: "News Website",
-      link: "/assets/images/news-project.png",
-      target: "_NewsSite",
-      image: "/assets/images/news-project.png",
-      imageAlt: "Snapshot from the news site",
-      description:
-        "This was the final project for the Web Programming course, where we were required to build a dynamic, web-based application for displaying news articles. The app included user authentication and role-based authorization using the WAMP stack.",
-      technologies: ["JavaScript", "PHP", "HTML", "CSS", "Bootstrab", "Mysql"],
-      github: "https://github.com/HasanAlsaafen/Aztech-New",
-    },
-    {
-      id: "cocktail-project",
-      title: "Cocktail Maker Project",
-      link: "/assets/images/Java.png",
-      target: "_JavaProject",
-      image: "/assets/images/Java.png",
-      imageAlt: "Snap from the main in my java project",
-      description:
-        "This project was the final assignment for the Object-Oriented Programming course. It focused on applying core OOP principles using Java with encapsulation, inheritance, and polymorphism. The GUI was designed using NetBeans.",
-      technologies: ["Java"],
-      github: "https://github.com/HasanAlsaafen/JavaProject-cocktail-",
-    },
-  ];
 
   return (
     <>
@@ -181,28 +134,24 @@ const Projects = () => {
         aria-labelledby="projects"
       >
         {loading ? (
-          <div className="col-span-full flex flex-col items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4" />
-            <p className="text-gray-500 font-medium">Loading projects...</p>
+          <div className="col-span-full py-10">
+            <Loader message="Fetching creative works..." />
           </div>
         ) : error ? (
-          <div className="col-span-full text-center py-20">
-            <p className="text-red-500 font-bold mb-2">Error loading projects</p>
-            <p className="text-gray-500">{error}</p>
-            <button 
-              onClick={() => setPage(page)} 
-              className="mt-4 text-primary underline font-medium"
-            >
-              Try again
-            </button>
+          <div className="col-span-full py-10">
+            <ErrorMessage 
+              message={error} 
+              onRetry={() => fetchProjects()} 
+            />
           </div>
         ) : projects.length > 0 ? (
           projects.map((proj) => (
-            <ProjectCard key={proj._id || proj.id} project={proj} />
+            <ProjectCard key={proj._id || proj.id} project={proj} techColors={techColors} />
           ))
         ) : (
-          <div className="col-span-full text-center py-20 text-gray-500">
-            No projects found for this page.
+          <div className="col-span-full text-center py-20 text-gray-500 bg-secondary/10 rounded-3xl border border-dashed border-border/50">
+            <p className="font-bold text-lg mb-2">No Projects Found</p>
+            <p className="text-sm">Check back later for new updates!</p>
           </div>
         )}
       </section>

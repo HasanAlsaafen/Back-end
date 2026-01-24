@@ -10,6 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
+import Loader from "../common/Loader";
+import ErrorMessage from "../common/ErrorMessage";
+import StatusAlert from "../common/StatusAlert";
 
 interface Project {
   _id?: string;
@@ -21,35 +24,23 @@ interface Project {
   technologies: string[];
 }
 
-const techColors: { [key: string]: string } = {
-  typescript: "bg-[#3178c6] text-white",
-  javascript: "bg-[#f7df1e] text-black",
-  react: "bg-[#61dafb] text-black",
-  tailwind: "bg-[#06b6d4] text-white",
-  html: "bg-[#e34f26] text-white",
-  css: "bg-[#1572b6] text-white",
-  formik: "bg-[#2563eb] text-white",
-  jest: "bg-[#99425b] text-white",
-  reactTesting: "bg-[#e11d48] text-white",
-  msw: "bg-[#ff6a33] text-white",
-  firebase: "bg-[#ffca28] text-black",
-  mysql: "bg-[#00758f] text-white",
-  php: "bg-[#777bb4] text-white",
-  java: "bg-[#007396] text-white",
-  "node.js": "bg-[#339933] text-white",
-  express: "bg-[#000000] text-white",
-  seo: "bg-green-500/80 text-black",
-  bootstrab: "bg-[#7952b3] text-white",
-  "react testing": "bg-[#e11d48] text-white",
-};
+interface TechColor {
+  _id: string;
+  name: string;
+  bgColor: string;
+  textColor: string;
+}
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const ProjectManage = () => {
   const [tech, setTech] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [dynamicTechColors, setDynamicTechColors] = useState<TechColor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [page, setPage] = useState(1);
   const limit = 3;
   const [editingProject, setEditingProject] = useState<Project | null>(null);
@@ -61,6 +52,18 @@ export const ProjectManage = () => {
     technologies: [],
   });
   const [showDeleteModal, setShowDeleteModal] = useState<string | null>(null);
+
+  const fetchColors = async () => {
+    try {
+      const response = await fetch(`${API_URL}/colorschemas`);
+      if (response.ok) {
+        const data = await response.json();
+        setDynamicTechColors(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch colors", err);
+    }
+  };
 
   const fetchProjects = async () => {
     setLoading(true);
@@ -80,6 +83,7 @@ export const ProjectManage = () => {
   };
 
   useEffect(() => {
+    fetchColors();
     fetchProjects();
   }, [page]);
 
@@ -118,6 +122,7 @@ export const ProjectManage = () => {
       });
       if (!response.ok) throw new Error("Failed to save project");
 
+      setStatusMessage({ type: 'success', text: `Project ${editingProject ? 'updated' : 'created'} successfully!` });
       setShowForm(false);
       setEditingProject(null);
       setFormData({
@@ -130,7 +135,7 @@ export const ProjectManage = () => {
       setTech([]);
       fetchProjects();
     } catch (err: any) {
-      alert(err.message);
+      setStatusMessage({ type: 'error', text: err.message });
     }
   };
 
@@ -148,11 +153,20 @@ export const ProjectManage = () => {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete project");
+      setStatusMessage({ type: 'success', text: 'Project deleted successfully' });
       setShowDeleteModal(null);
       fetchProjects();
     } catch (err: any) {
-      alert(err.message);
+      setStatusMessage({ type: 'error', text: err.message });
     }
+  };
+
+  const getTechStyle = (techName: string) => {
+    const found = dynamicTechColors.find(c => c.name.toLowerCase() === techName.toLowerCase());
+    if (found) {
+      return { backgroundColor: found.bgColor, color: found.textColor };
+    }
+    return { backgroundColor: "#6b7280", color: "#ffffff" }; // Default gray
   };
 
   return (
@@ -186,6 +200,14 @@ export const ProjectManage = () => {
               </button>
             </div>
           </article>
+
+          {statusMessage && (
+            <StatusAlert 
+              type={statusMessage.type} 
+              message={statusMessage.text} 
+              onClose={() => setStatusMessage(null)} 
+            />
+          )}
 
           {showForm && (
             <article className="p-4 md:p-8 bg-card shadow-2xl rounded-2xl border border-border animate-in fade-in slide-in-from-top-4 duration-300">
@@ -259,13 +281,14 @@ export const ProjectManage = () => {
                     {tech.map((t) => (
                       <span
                         key={t}
-                        className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${techColors[t.toLowerCase()] || "bg-gray-500 text-white"}`}
+                        className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium shadow-sm transition-all"
+                        style={getTechStyle(t)}
                       >
                         {t}
                         <button
                           type="button"
                           onClick={() => handleRemoveTech(t)}
-                          className="hover:text-red-400 transition-colors"
+                          className="hover:scale-125 transition-transform"
                         >
                           <FontAwesomeIcon icon={faXmark} />
                         </button>
@@ -282,12 +305,15 @@ export const ProjectManage = () => {
                     className="w-full p-4 rounded-xl bg-secondary/20 border border-border focus:border-primary outline-none transition-all"
                   >
                     <option value="">Add a technology...</option>
-                    {Object.keys(techColors).map((t) => (
-                      <option key={t} value={t}>
-                        {t.charAt(0).toUpperCase() + t.slice(1)}
+                    {dynamicTechColors.map((c) => (
+                      <option key={c._id} value={c.name}>
+                        {c.name}
                       </option>
                     ))}
                   </select>
+                  <p className="text-[10px] text-gray-500 italic">
+                    Don't see a tech? Add its colors in the <span className="text-primary font-bold">Colors</span> section first.
+                  </p>
                 </div>
                 <button
                   type="submit"
@@ -307,14 +333,15 @@ export const ProjectManage = () => {
             </div>
 
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-20">
-                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4" />
-                <p className="text-gray-500 font-medium">Loading projects...</p>
+              <div className="py-20">
+                <Loader message="Syncing projects inventory..." />
               </div>
             ) : error ? (
-              <div className="text-center py-20 text-red-500 bg-red-500/10 rounded-2xl border border-red-500/20">
-                <p className="font-bold mb-2">Error loading projects</p>
-                <p>{error}</p>
+              <div className="py-20">
+                <ErrorMessage 
+                  message={error} 
+                  onRetry={() => fetchProjects()} 
+                />
               </div>
             ) : projects.length === 0 ? (
               <div className="text-center py-20 bg-secondary/10 rounded-2xl border border-dashed border-border flex flex-col items-center">
@@ -375,7 +402,8 @@ export const ProjectManage = () => {
                         {project.technologies.slice(0, 3).map((t, i) => (
                           <span
                             key={i}
-                            className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${techColors[t.toLowerCase()] || "bg-gray-500 text-white"}`}
+                            className="px-2 py-0.5 rounded-full text-[10px] font-medium shadow-sm transition-all"
+                            style={getTechStyle(t)}
                           >
                             {t}
                           </span>
@@ -390,6 +418,7 @@ export const ProjectManage = () => {
                         <a
                           href={project.projectUrl}
                           target="_blank"
+                          rel="noreferrer"
                           className="w-full py-2 rounded-lg bg-primary text-white text-xs font-bold text-center hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                         >
                           <FontAwesomeIcon icon={faArrowRight} /> Visit Project

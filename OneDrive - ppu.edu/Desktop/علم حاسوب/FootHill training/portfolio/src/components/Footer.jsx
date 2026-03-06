@@ -90,12 +90,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-gray-50 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+        <div className="pt-8 border-t border-gray-50 dark:border-slate-800 flex flex-col md:flex-row justify-center items-center gap-4 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
           <p>&copy; {currentYear} Hasan Al-Saafin</p>
           <div className="flex items-center gap-6">
-            <span>Built with React & Tailwind</span>
-            <span className="hidden md:block w-1 h-1 rounded-full bg-gray-200 dark:bg-slate-800" />
-            <span>Design-led Development</span>
+            <span>Built with Love 💗</span>
+        
           </div>
         </div>
       </div>

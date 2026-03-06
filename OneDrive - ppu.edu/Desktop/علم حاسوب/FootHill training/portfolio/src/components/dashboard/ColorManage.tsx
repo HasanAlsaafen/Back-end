@@ -19,7 +19,12 @@ interface ColorItem {
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+import { useApi } from "../../hooks/useApi";
+
+
+
 export default function ColorManage() {
+  const { request } = useApi();
   const [colors, setColors] = useState<ColorItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -34,7 +39,7 @@ export default function ColorManage() {
   const fetchColors = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/colorschemas`);
+      const response = await request(`${API_URL}/colorschemas`);
       if (!response.ok) throw new Error("Failed to fetch colors");
       const data = await response.json();
       setColors(data);
@@ -57,9 +62,11 @@ export default function ColorManage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/colorschemas`, {
+      const response = await request(`${API_URL}/colorschemas`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
       if (!response.ok) throw new Error("Failed to save color");
@@ -76,7 +83,7 @@ export default function ColorManage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/colorschemas/${id}`, {
+      const response = await request(`${API_URL}/colorschemas/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete color");

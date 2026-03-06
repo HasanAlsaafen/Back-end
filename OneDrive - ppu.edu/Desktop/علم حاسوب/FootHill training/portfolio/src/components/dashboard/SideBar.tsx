@@ -34,7 +34,7 @@ export default function SideBar({
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform any logout logic here (e.g., clearing tokens)
+    
     navigate("/login");
   };
 

@@ -27,7 +27,12 @@ interface Message {
 
 const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:3000"}/messages`;
 
+import { useApi } from "../../hooks/useApi";
+
+
+
 export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: () => void }) {
+  const { request } = useApi();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -40,7 +45,7 @@ export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: ()
   const fetchMessages = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}?limit=${limit}&page=${page}`);
+      const response = await request(`${API_URL}?limit=${limit}&page=${page}`);
       if (!response.ok) throw new Error("Failed to fetch messages");
       const data = await response.json();
       setMessages(Array.isArray(data) ? data : []);
@@ -58,7 +63,8 @@ export default function MessageManage({ onMessageUpdate }: { onMessageUpdate: ()
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      
+      const response = await request(`${API_URL}/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete message");

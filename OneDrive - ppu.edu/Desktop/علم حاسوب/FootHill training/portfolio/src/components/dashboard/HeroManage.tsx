@@ -27,7 +27,12 @@ interface HeroData {
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const HERO_ID = '69725fab64d15d80a13ea473';
 
+import { useApi } from "../../hooks/useApi";
+
+
+
 export default function HeroManage() {
+  const { request } = useApi();
   const [formData, setFormData] = useState<HeroData>({
     heading: '',
     subheading: '',
@@ -46,7 +51,7 @@ export default function HeroManage() {
   useEffect(() => {
     const fetchHero = async () => {
       try {
-        const response = await fetch(`${API_URL}/herosections/${HERO_ID}`);
+        const response = await request(`${API_URL}/herosections/${HERO_ID}`);
         if (response.ok) {
           const data = await response.json();
           if (data) {
@@ -100,9 +105,11 @@ export default function HeroManage() {
     setStatusMessage(null);
     
     try {
-      const response = await fetch(`${API_URL}/herosections/${HERO_ID}`, {
+      const response = await request(`${API_URL}/herosections/${HERO_ID}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(formData)
       });
 

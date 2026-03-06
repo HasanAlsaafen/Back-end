@@ -26,7 +26,12 @@ interface Certificate {
 
 const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:3000"}/certificates`;
 
+import { useApi } from "../../hooks/useApi";
+
+
+
 export default function CertifacateManage() {
+  const { request } = useApi();
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +55,7 @@ export default function CertifacateManage() {
   const fetchCertificates = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}?limit=${limit}&page=${page}`);
+      const response = await request(`${API_URL}?limit=${limit}&page=${page}`);
       if (!response.ok) throw new Error("Failed to fetch certificates");
       const data = await response.json();
       setCertificates(Array.isArray(data) ? data : []);
@@ -77,9 +82,11 @@ export default function CertifacateManage() {
     const url = editingCertificate ? `${API_URL}/${editingCertificate._id}` : API_URL;
 
     try {
-      const response = await fetch(url, {
+      const response = await request(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
       if (!response.ok) throw new Error("Failed to save certificate");
@@ -118,7 +125,7 @@ export default function CertifacateManage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      const response = await request(`${API_URL}/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete certificate");

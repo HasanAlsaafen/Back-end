@@ -32,8 +32,10 @@ interface TechColor {
 }
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { useApi } from "../../hooks/useApi";
 
 export const ProjectManage = () => {
+  const { request } = useApi();
   const [tech, setTech] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -55,7 +57,7 @@ export const ProjectManage = () => {
 
   const fetchColors = async () => {
     try {
-      const response = await fetch(`${API_URL}/colorschemas`);
+      const response = await request(`${API_URL}/colorschemas`);
       if (response.ok) {
         const data = await response.json();
         setDynamicTechColors(data);
@@ -68,7 +70,7 @@ export const ProjectManage = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
+      const response = await request(
         `${API_URL}/projects?limit=${limit}&page=${page}`,
       );
       if (!response.ok) throw new Error("Failed to fetch projects");
@@ -115,7 +117,7 @@ export const ProjectManage = () => {
       : `${API_URL}/projects`;
 
     try {
-      const response = await fetch(url, {
+      const response = await request(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(projectToSave),
@@ -149,7 +151,7 @@ export const ProjectManage = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/projects/${id}`, {
+      const response = await request(`${API_URL}/projects/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete project");

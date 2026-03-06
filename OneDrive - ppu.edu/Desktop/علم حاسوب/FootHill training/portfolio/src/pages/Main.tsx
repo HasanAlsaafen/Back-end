@@ -5,7 +5,9 @@ import Projects from "../components/Projects";
 import Certificates from "../components/Certificates";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import ChatBot from "../components/ChatBot";
 import { useState, useEffect } from "react";
+
 export default function Main()
 {
     const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -38,6 +40,7 @@ export default function Main()
            <Contact />
          </main>
          <Footer />
+         <ChatBot />
        </div> 
   )
 }

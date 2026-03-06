@@ -1,0 +1,468 @@
+﻿
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/hasan/OneDrive - ppu.edu/Desktop/╪╣┘┘à ╪ص╪د╪│┘ê╪ذ/FootHill training/portfolio[39m
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould send a message and display it
+[22m[39mHello!
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould send a message and display it
+[22m[39m[DONE]
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould stream the API response into the chat
+[22m[39mHi
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould stream the API response into the chat
+[22m[39m there
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould stream the API response into the chat
+[22m[39m!
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould stream the API response into the chat
+[22m[39m[DONE]
+
+npx : [90mstderr[2m | 
+src/tests/components/ChatBot.test.jsx[2m > 
+[22m[2mChatBot[2m > [22m[2mshould show 
+error message when API fails
+At line:1 char:1
++ npx vitest run 
+src/tests/components/ChatBot.test.jsx > 
+test_output2.t ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([9 
+   0mstderr[2m... when API fails:String) [], R  
+  emoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39mChat API error: Error: Server 
+responded with 500
+    at handleSubmit (C:/Users/hasan/OneDrive - 
+ppu.edu/Desktop/╪╣┘┘à ╪ص╪د╪│┘ê╪ذ/FootHill traini
+ng/portfolio/src/components/ChatBot.jsx:64:15)
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould send message and history to the API
+[22m[39mReply
+
+[90mstdout[2m | src/tests/components/ChatBot.test.jsx[2m > [22m[2mChatBot[2m > [22m[2mshould send message and history to the API
+[22m[39m[DONE]
+
+ [31mظإ»[39m src/tests/components/ChatBot.test.jsx [2m([22m[2m12 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 4953[2mms[22m[39m
+     [33m[2mظ£ô[22m[39m should render the toggle button [33m 512[2mms[22m[39m
+     [32mظ£ô[39m should not show chat window by default[32m 40[2mms[22m[39m
+     [33m[2mظ£ô[22m[39m should open chat when button is clicked [33m 943[2mms[22m[39m
+     [32mظ£ô[39m should show initial assistant message[32m 54[2mms[22m[39m
+     [32mظ£ô[39m should close chat when close button is clicked[32m 241[2mms[22m[39m
+     [33m[2mظ£ô[22m[39m should send a message and display it [33m 1320[2mms[22m[39m
+     [33m[2mظ£ô[22m[39m should stream the API response into the chat [33m 535[2mms[22m[39m
+     [33m[2mظ£ô[22m[39m should show error message when API fails [33m 434[2mms[22m[39m
+     [32mظ£ô[39m should not send empty messages[32m 235[2mms[22m[39m
+[31m     [31m├ù[31m should have correct aria-expanded attribute[39m[32m 28[2mms[22m[39m
+     [32mظ£ô[39m should disable input while loading[32m 281[2mms[22m[39m
+     [33m[2mظ£ô[22m[39m should send message and history to the API [33m 324[2mms[22m[39m
+
+[31mظ»ظ»ظ»ظ»ظ»ظ»ظ»[39m[1m[41m Failed 
+Tests 1 [49m[22m[31mظ»ظ»ظ»ظ»ظ»ظ»ظ»[39m
+
+[41m[1m FAIL [22m[49m 
+src/tests/components/ChatBot.test.jsx[2m > 
+[22mChatBot[2m > [22mshould have correct 
+aria-expanded attribute
+[31m[1mTestingLibraryElementError[22m[39m: 
+Found multiple elements with the text of: /Close 
+chat with|Close chat$/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<button[39m
+  [33maria-label[39m=[32m"Close chat"[39m
+  [33mclass[39m=[32m"p-2 hover:bg-white/10 
+rounded-xl transition-colors"[39m
+[36m>[39m
+  [36m<svg[39m
+    [33maria-hidden[39m=[32m"true"[39m
+    [33mclass[39m=[32m"svg-inline--fa 
+fa-xmark"[39m
+    [33mdata-icon[39m=[32m"xmark"[39m
+    [33mdata-prefix[39m=[32m"fas"[39m
+    [33mrole[39m=[32m"img"[39m
+    [33mviewBox[39m=[32m"0 0 384 512"[39m
+  [36m>[39m
+    [36m<path[39m
+      [33md[39m=[32m"M55.1 
+73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 
+45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 
+45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 
+438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 
+0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 
+0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 
+73.4z"[39m
+      [33mfill[39m=[32m"currentColor"[39m
+    [36m/>[39m
+  [36m</svg>[39m
+[36m</button>[39m
+
+Ignored nodes: comments, script, style
+[36m<button[39m
+  [33maria-expanded[39m=[32m"true"[39m
+  [33maria-label[39m=[32m"Close chat"[39m
+  [33mclass[39m=[32m"w-14 h-14 rounded-full 
+flex items-center justify-center text-white 
+shadow-2xl transition-all duration-500 
+hover:scale-110 active:scale-95 bg-red-500 
+rotate-90"[39m
+[36m>[39m
+  [36m<svg[39m
+    [33maria-hidden[39m=[32m"true"[39m
+    [33mclass[39m=[32m"svg-inline--fa 
+fa-xmark text-xl transition-all 
+duration-300"[39m
+    [33mdata-icon[39m=[32m"xmark"[39m
+    [33mdata-prefix[39m=[32m"fas"[39m
+    [33mrole[39m=[32m"img"[39m
+    [33mviewBox[39m=[32m"0 0 384 512"[39m
+  [36m>[39m
+    [36m<path[39m
+      [33md[39m=[32m"M55.1 
+73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 
+45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 
+45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 
+438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 
+0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 
+0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 
+73.4z"[39m
+      [33mfill[39m=[32m"currentColor"[39m
+    [36m/>[39m
+  [36m</svg>[39m
+[36m</button>[39m
+
+(If this is intentional, then use the `*AllBy*` 
+variant of the query (like `queryAllByText`, 
+`getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"fixed bottom-6 
+right-6 z-50 flex flex-col items-end"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-label[39m=[32m"Chat with AI 
+Assistant"[39m
+        [33mclass[39m=[32m"mb-4 w-80 sm:w-96 
+h-[500px] bg-card border border-border 
+rounded-3xl shadow-2xl flex flex-col 
+overflow-hidden animate-in fade-in 
+slide-in-from-bottom-4 duration-300"[39m
+        [33mrole[39m=[32m"dialog"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-primary p-4 
+text-white flex items-center 
+justify-between"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex 
+items-center gap-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"w-10 h-10 
+bg-white/20 rounded-full flex items-center 
+justify-center"[39m
+            [36m>[39m
+              [36m<svg[39m
+                
+[33maria-hidden[39m=[32m"true"[39m
+                
+[33mclass[39m=[32m"svg-inline--fa 
+fa-robot"[39m
+                
+[33mdata-icon[39m=[32m"robot"[39m
+                
+[33mdata-prefix[39m=[32m"fas"[39m
+                [33mrole[39m=[32m"img"[39m
+                [33mviewBox[39m=[32m"0 0 640 
+512"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M352 
+0c0-17.7-14.3-32-32-32S288-17.7 288 0l0 64-96 
+0c-53 0-96 43-96 96l0 224c0 53 43 96 96 96l256 
+0c53 0 96-43 96-96l0-224c0-53-43-96-96-96l-96 0 
+0-64zM160 368c0-13.3 10.7-24 24-24l32 0c13.3 0 
+24 10.7 24 24s-10.7 24-24 24l-32 0c-13.3 
+0-24-10.7-24-24zm120 0c0-13.3 10.7-24 24-24l32 
+0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-32 
+0c-13.3 0-24-10.7-24-24zm120 0c0-13.3 10.7-24 
+24-24l32 0c13.3 0 24 10.7 24 24s-10.7 24-24 
+24l-32 0c-13.3 0-24-10.7-24-24zM224 176a48 48 0 
+1 1 0 96 48 48 0 1 1 0-96zm144 48a48 48 0 1 1 96 
+0 48 48 0 1 1 -96 0zM64 
+224c0-17.7-14.3-32-32-32S0 206.3 0 224l0 96c0 
+17.7 14.3 32 32 32s32-14.3 
+32-32l0-96zm544-32c-17.7 0-32 14.3-32 32l0 96c0 
+17.7 14.3 32 32 32s32-14.3 
+32-32l0-96c0-17.7-14.3-32-32-32z"[39m
+                  
+[33mfill[39m=[32m"currentColor"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<h3[39m
+                [33mclass[39m=[32m"font-bold 
+text-sm"[39m
+              [36m>[39m
+                [0mHasan's Assistant[0m
+              [36m</h3>[39m
+              [36m<span[39m
+                
+[33mclass[39m=[32m"text-[10px] opacity-80 
+flex items-center gap-1"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"w-1.5 
+h-1.5 bg-green-400 rounded-full 
+animate-pulse"[39m
+                [36m/>[39m
+                [0m Online[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Close 
+chat"[39m
+            [33mclass[39m=[32m"p-2 
+hover:bg-white/10 rounded-xl 
+transition-colors"[39m
+          [36m>[39m
+            [36m<svg[39m
+              
+[33maria-hidden[39m=[32m"true"[39m
+              
+[33mclass[39m=[32m"svg-inline--fa 
+fa-xmark"[39m
+              
+[33mdata-icon[39m=[32m"xmark"[39m
+              
+[33mdata-prefix[39m=[32m"fas"[39m
+              [33mrole[39m=[32m"img"[39m
+              [33mviewBox[39m=[32m"0 0 384 
+512"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M55.1 
+73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 
+45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 
+45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 
+438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 
+0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 
+0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 
+73.4z"[39m
+                
+[33mfill[39m=[32m"currentColor"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 
+overflow-y-auto p-4 space-y-4 custom-scrollbar 
+bg-secondary/30"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex 
+justify-start"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"max-w-[80%] 
+p-3 rounded-2xl text-sm bg-card border 
+border-border text-text rounded-tl-none"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex 
+items-center gap-2 mb-1 opacity-70 text-[10px] 
+uppercase font-bold tracking-wider"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  
+[33maria-hidden[39m=[32m"true"[39m
+                  
+[33mclass[39m=[32m"svg-inline--fa 
+fa-robot"[39m
+                  
+[33mdata-icon[39m=[32m"robot"[39m
+                  
+[33mdata-prefix[39m=[32m"fas"[39m
+                  [33mrole[39m=[32m"img"[39m
+                  [33mviewBox[39m=[32m"0 0 
+640 512"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M352 
+0c0-17.7-14.3-32-32-32S288-17.7 288 0l0 64-96 
+0c-53 0-96 43-96 96l0 224c0 53 43 96 96 96l256 
+0c53 0 96-43 96-96l0-224c0-53-43-96-96-96l-96 0 
+0-64zM160 368c0-13.3 10.7-24 24-24l32 0c13.3 0 
+24 10.7 24 24s-10.7 24-24 24l-32 0c-13.3 
+0-24-10.7-24-24zm120 0c0-13.3 10.7-24 24-24l32 
+0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-32 
+0c-13.3 0-24-10.7-24-24zm120 0c0-13.3 10.7-24 
+24-24l32 0c13.3 0 24 10.7 24 24s-10.7 24-24 
+24l-32 0c-13.3 0-24-10.7-24-24zM224 176a48 48 0 
+1 1 0 96 48 48 0 1 1 0-96zm144 48a48 48 0 1 1 96 
+0 48 48 0 1 1 -96 0zM64 
+224c0-17.7-14.3-32-32-32S0 206.3 0 224l0 96c0 
+17.7 14.3 32 32 32s32-14.3 
+32-32l0-96zm544-32c-17.7 0-32 14.3-32 32l0 96c0 
+17.7 14.3 32 32 32s32-14.3 
+32-32l0-96c0-17.7-14.3-32-32-32z"[39m
+                    
+[33mfill[39m=[32m"currentColor"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [0mAssistant[0m
+              [36m</div>[39m
+              [0mHi! I'm Hasan's virtual 
+assistant. How can I help you today?[0m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div />[39m
+        [36m</div>[39m
+        [36m<form[39m
+          [33mclass[39m=[32m"p-4 bg-card 
+border-t border-border flex gap-2"[39m
+        [36m>[39m
+          [36m<input[39m
+            [33maria-label[39m=[32m"Message 
+text"[39m
+            [33mclass[39m=[32m"flex-1 
+bg-secondary border border-border p-2 px-4 
+rounded-xl text-sm focus:outline-none 
+focus:ring-2 focus:ring-primary/50 
+transition-all font-medium 
+disabled:opacity-50"[39m
+            [33mplaceholder[39m=[32m"Type a 
+message..."[39m
+            [33mtype[39m=[32m"text"[39m
+            [33mvalue[39m=[32m""[39m
+          [36m/>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Send 
+message"[39m
+            [33mclass[39m=[32m"w-10 h-10 
+bg-primary text-white rounded-xl flex 
+items-center justify-center hover:scale-105 
+active:scale-95 transition-all shadow-lg 
+shadow-primary/20"[39m
+            [33mtype[39m=[32m"submit"[39m
+          [36m>[39m
+            [36m<svg[39m
+              
+[33maria-hidden[39m=[32m"true"[39m
+              
+[33mclass[39m=[32m"svg-inline--fa 
+fa-paper-plane"[39m
+              
+[33mdata-icon[39m=[32m"paper-plane"[39m
+              
+[33mdata-prefix[39m=[32m"fas"[39m
+              [33mrole[39m=[32m"img"[39m
+              [33mviewBox[39m=[32m"0 0 576 
+512"[39m
+            [36m>[39m
+              [36m<path[39m
+                
+[33md[39m=[32m"M536.4-26.3c9.8-3.5 20.6-1 28 
+6.3s9.8 18.2 6.3 28l-178 496.9c-5 13.9-18.1 
+23.1-32.8 23.1-14.2 
+0-27-8.6-32.3-21.7l-64.2-158c-4.5-11-2.5-23.6 
+5.2-32.6l94.5-112.4c5.1-6.1 
+4.7-15-.9-20.6s-14.6-6-20.6-.9L229.2 276.1c-9.1 
+7.6-21.6 9.6-32.6 5.2L38.1 
+216.8c-13.1-5.3-21.7-18.1-21.7-32.3 0-14.7 
+9.2-27.8 23.1-32.8l496.9-178z"[39m
+                
+[33mfill[39m=[32m"currentColor"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</form>[39m
+      [36m</div>[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m11 passed[39m[22m[90m (12)[39m
+[2m   Start at [22m 17:11:15
+[2m   Duration [22m 13.32s[2m (transform 518ms, setup 800ms, import 2.27s, tests 4.95s, environment 4.22s)[22m
+
+      [36m<button[39m
+        [33maria-expanded[39m=[32m"true"[39m
+        [33maria-label[39m=[32m"Close 
+chat"[39m
+        [33mclass[39m=[32m"w-14 h-14 
+rounded-full flex items-center justify-center 
+text-white shadow-2xl transition-all 
+duration-500 hover:scale-110 active:scale-95 
+bg-red-500 rotate-90"[39m
+      [36m>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"svg-inline--fa 
+fa-xmark text-xl transition-all 
+duration-300"[39m
+          [33mdata-icon[39m=[32m"xmark"[39m
+          [33mdata-prefix[39m=[32m"fas"[39m
+          [33mrole[39m=[32m"img"[39m
+          [33mviewBox[39m=[32m"0 0 384 
+512"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"M55.1 
+73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 
+45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 
+45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 
+438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 
+0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 
+0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 
+73.4z"[39m
+            
+[33mfill[39m=[32m"currentColor"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+      [36m</button>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2mظإ»[22m Object.getElementError node_mo
+dules/@testing-library/dom/dist/config.js:[2m37:
+19[22m[39m
+[90m [2mظإ»[22m getElementError node_modules/@
+testing-library/dom/dist/query-helpers.js:[2m20:
+35[22m[39m
+[90m [2mظإ»[22m getMultipleElementsFoundError 
+node_modules/@testing-library/dom/dist/query-help
+ers.js:[2m23:10[22m[39m
+[90m [2mظإ»[22m node_modules/@testing-library/
+dom/dist/query-helpers.js:[2m55:13[22m[39m
+[90m [2mظإ»[22m node_modules/@testing-library/
+dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2mظإ»[22m src/tests/components/ChatBot.t
+est.jsx:[2m160:38[22m[39m
+    [90m158| [39m
+    [90m159| [39m    fireEvent[33m.[39m[34mc
+lick[39m(toggleButton)[33m;[39m
+    [90m160| [39m    const closeToggleButton = 
+screen.getByLabelText(/Close chat with|Cظخ
+    [90m   | [39m                              
+       [31m^[39m
+    [90m161| [39m    
+[34mexpect[39m(closeToggleButton [33m||[39m t
+oggleButton)[33m.[39m[34mtoBeTruthy[39m()[33
+m;[39m
+    [90m162| [39m  })[33m;[39m
+
+[31m[2mظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ
+»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»ظ»[1/1]ظ»[22m[39
+m
+
